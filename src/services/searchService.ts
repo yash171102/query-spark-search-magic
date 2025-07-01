@@ -1,3 +1,4 @@
+
 import { User, SearchResult, SearchFilters } from '../types/search';
 
 // Mock product database
@@ -130,10 +131,10 @@ const correctSpelling = (query: string): string => {
 const parseSemanticQuery = (query: string) => {
   const lowerQuery = query.toLowerCase();
   const result: any = {
-    brand: null,
-    color: null,
+    brand: [],
+    color: [],
     priceConstraint: null,
-    category: null
+    category: []
   };
 
   // Extract brand
