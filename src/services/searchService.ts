@@ -1,4 +1,3 @@
-
 import { User, SearchResult, SearchFilters } from '../types/search';
 
 // Mock product database
@@ -141,7 +140,7 @@ const parseSemanticQuery = (query: string) => {
   const brands = ['nike', 'adidas', 'puma', 'mac', 'loreal', 'head & shoulders'];
   for (const brand of brands) {
     if (lowerQuery.includes(brand)) {
-      result.brand = brand;
+      result.brand = [brand];
       break;
     }
   }
@@ -150,7 +149,7 @@ const parseSemanticQuery = (query: string) => {
   const colors = ['black', 'white', 'red', 'blue', 'pink'];
   for (const color of colors) {
     if (lowerQuery.includes(color)) {
-      result.color = color;
+      result.color = [color];
       break;
     }
   }
@@ -189,10 +188,10 @@ export const mockSearchService = {
       
       // Semantic matching
       let semanticMatch = true;
-      if (semanticData.brand && !product.brand.toLowerCase().includes(semanticData.brand)) {
+      if (semanticData.brand && !semanticData.brand.some((b:string) => product.brand.toLowerCase().includes(b))) {
         semanticMatch = false;
       }
-      if (semanticData.color && !JSON.stringify(product.attributes).toLowerCase().includes(semanticData.color)) {
+      if (semanticData.color && !semanticData.color.some((c:string) => JSON.stringify(product.attributes).toLowerCase().includes(c))) {
         semanticMatch = false;
       }
       if (semanticData.priceConstraint?.max && product.price > semanticData.priceConstraint.max) {
